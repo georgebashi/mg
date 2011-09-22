@@ -1,6 +1,7 @@
 # Huh?
 mg manages __m__ultiple __g__it repositories, making it easy to work with a team of people sharing a group of repositories.
 It's similar to Google's [repo](http://source.android.com/source/version-control.html) tool, but a lot less annoying and complicated.
+
 mg tries to do as little "magic" as possible, telling you exactly what commands it's running on your repos so you're always on top of what's happening.
 
 # Install
