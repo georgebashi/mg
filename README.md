@@ -4,6 +4,15 @@ It's similar to Google's [repo](http://source.android.com/source/version-control
 
 mg tries to do as little "magic" as possible, telling you exactly what commands it's running on your repos so you're always on top of what's happening.
 
+# What's wrong with submodules?
+Not a lot -- some people like them, and they work well in certain situations. That said, we found that:
+
+* Doing a pull on the parent project detaches the heads of all the child projects, which is irritating.
+* You can't pin a submodule to a tag or branch, which makes things confusing.
+* After every commit on a child, you have to update the parent for other people to "see" the change, which people forget (or can't be bothered) to do.
+
+mg attempts to fix the above without creating too many problems of its own.
+
 # Install
 In a new directory:
 <pre>
