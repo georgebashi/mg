@@ -1,3 +1,6 @@
+# WARNING
+This project is extremely new and lots of fundamental things are changing with each commit. Use at your own peril!
+
 # Huh?
 mg manages __m__ultiple __g__it repositories, making it easy to work with a team of people sharing a group of repositories.
 It's similar to Google's [repo](http://source.android.com/source/version-control.html) tool, but a lot less annoying and complicated.
@@ -20,7 +23,7 @@ mkdir .mg
 git clone git@github.com:georgebashi/mg .mg/mg
 cp .mg/mg/mghelper.sh /usr/local/bin/mg
 </pre>
-Now write your .mg/config
+Now write your `.mg/config`:
 
 # .mg/config
 This file is in git config format. Here's an example to get you going:
