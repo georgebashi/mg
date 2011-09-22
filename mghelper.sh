@@ -1,19 +1,17 @@
 #!/bin/sh
 
 cwd=`pwd`
-mgdir=$cwd
+parent_dir=$cwd
 
-# find mg file
-
-while [ ! "/" = "$mgdir" -a ! -r $mgdir/.mg ]; do
-  mgdir=`dirname $mgdir`
+while [ ! "/" = "$parent_dir" -a ! -r $parent_dir/.mg ]; do
+  parent_dir=`dirname $parent_dir`
 done
 
-if [ "/" = $mgdir ]; then
-  echo "fatal: Not a mg repository (or any of the parent directories): .mg"
+if [ "/" = $parent_dir ]; then
+  echo " [mg] Can't find .mg dir!"
   exit 1
 fi
 
 did_run_helper=1
-. $mgdir/.mg/mg/mg.sh
+. $parent_dir/.mg/mg/mg.sh
 
