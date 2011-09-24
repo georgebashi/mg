@@ -38,6 +38,10 @@ if [ ! -r "$mg_dir/mg-$cmd.sh" ]; then
   cmd="help"
 fi
 
-. $mg_dir/mg-$cmd.sh
+(
+  # always run command from within parent dir
+  cd $parent_dir
+  . $mg_dir/mg-$cmd.sh
+)
 exit
 

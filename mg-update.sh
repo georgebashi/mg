@@ -1,28 +1,23 @@
 
 ### Update child repositories
 
-# run in parent dir
-(
-  cd $parent_dir
-
-  for child in $children; do
-    # if child dir doesn't exist
-    if [ ! -e $child ]; then
-      url=`$git_config_cmd --get repo.$child.url`
-      mg_exec $child git clone $url $child
+for child in $children; do
+  # if child dir doesn't exist
+  if [ ! -e $child ]; then
+    url=`$git_config_cmd --get repo.$child.url`
+    mg_exec $child git clone $url $child
 
     # if child isn't a directory
-    elif [ ! -d $child ]; then
-      echo_fail "$child: exists and is not a directory, skipping!"
+  elif [ ! -d $child ]; then
+    echo_fail "$child: exists and is not a directory, skipping!"
 
     # child must exist as directory
+  else
+    # if there's no .git dir
+    if [ ! -d $child/.git ]; then
+      echo_fail "$child: exists and isn't a git repository, skipping!"
     else
-      # if there's no .git dir
-      if [ ! -d $child/.git ]; then
-        echo_fail "$child: exists and isn't a git repository, skipping!"
-      else
-        mg_exec $child git fetch
-      fi
+      mg_exec $child git fetch
     fi
-  done
-)
+  fi
+done
