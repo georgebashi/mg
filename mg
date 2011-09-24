@@ -1,14 +1,16 @@
 #!/bin/sh
 
+# home defaults to the mg that is being run
 mg_home="$( cd "$( dirname "$0" )" && pwd )"
 
-# set up colours
+# set up colours {{{
 mg_color_ok=`git config --get-color '' green`
 mg_color_fail=`git config --get-color '' red`
 mg_color_cmd=`git config --get-color '' white bold`
 mg_color_reset=`git config --get-color '' reset`
+# }}}
 
-# basic essential functions
+# basic essential functions {{{
 echo_ok() {
   echo " [${mg_color_ok}mg${mg_color_reset}] $@"
 }
@@ -28,6 +30,7 @@ mg_exec_parent() {
   echo_ok "$(fmt_cmd $@)"
   (eval $@)
 }
+# }}}
 
 # capture env
 cwd=`pwd`
@@ -84,3 +87,5 @@ if [ "${0##*/}" = "mg" ]; then
   )
   exit
 fi
+
+# vim: set foldmethod=marker
