@@ -4,9 +4,9 @@
 
 if [ $# -eq 0 ]; then
   # show summary
-  for cmd in `find $mg_dir -name 'mg-*.sh'`; do
-    cmdname=`basename $cmd .sh | cut -c 4-`
+  for cmd in `find $mg_home -name 'mg-*'`; do
+    cmdname=`basename $cmd | cut -c 4-`
     help=`grep -i '###' $cmd | head -n 1 | cut -c 5-`
-    echo_ok "$cmdname: $help"
+    echo_ok "$(fmt_cmd $cmdname): $help"
   done
 fi

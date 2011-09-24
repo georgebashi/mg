@@ -1,3 +1,4 @@
+#!/bin/sh
 
 ### Run a command for each child repository
 

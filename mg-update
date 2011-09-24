@@ -1,3 +1,8 @@
+#!/bin/sh
+
+if [ ! -n "${mg_home}" ]; then
+  . mg
+fi
 
 ### Update child repositories
 
@@ -5,13 +10,13 @@ for child in $children; do
   # if child dir doesn't exist
   if [ ! -e $child ]; then
     url=`$git_config_cmd --get repo.$child.url`
-    mg_exec $child git clone $url $child
+    mg_exec_parent git clone $url $child
 
-    # if child isn't a directory
+  # if child isn't a directory
   elif [ ! -d $child ]; then
     echo_fail "$child: exists and is not a directory, skipping!"
 
-    # child must exist as directory
+  # child must exist as directory
   else
     # if there's no .git dir
     if [ ! -d $child/.git ]; then
