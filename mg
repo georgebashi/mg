@@ -40,7 +40,7 @@ done
 
 need_mg_dir() {
   if [ -z $parent_dir ]; then
-    echo_fail "Can't find .mg dir!"
+    echo_fail "Can't find .mg dir, do you need to run $(fmt_cmd mg init)?"
     exit 1
   fi
   mg_dir=$parent_dir/.mg
@@ -71,7 +71,7 @@ if [ "${0##*/}" = "mg" ]; then
 
   # find subcommand
   if [ ! -r "$mg_home/mg-$cmd" ]; then
-    echo "$msg_prefix_fail Unknown command \"$cmd\""
+    echo_fail "Unknown subcommand $(fmt_cmd $cmd)"
     cmd="help"
   fi
 
