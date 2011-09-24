@@ -1,5 +1,7 @@
 #!/bin/sh
 
+[ ! -n "${mg_home}" ] && . mg
+
 ### Show (this) help
 
 if [ $# -eq 0 ]; then

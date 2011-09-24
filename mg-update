@@ -1,9 +1,6 @@
 #!/bin/sh
 
-if [ ! -n "${mg_home}" ]; then
-  . mg
-fi
-
+[ ! -n "${mg_home}" ] && . mg
 need_mg_dir
 
 ### Update child repositories

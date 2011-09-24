@@ -1,5 +1,6 @@
 #!/bin/sh
 
+[ ! -n "${mg_home}" ] && . mg
 need_mg_dir
 
 ### Clone a copy of mg into .mg, locking the version used for this project
