@@ -21,11 +21,11 @@ fmt_cmd() {
 mg_exec() {
   child=$1
   shift 1
-  echo_ok "$child: $@"
+  echo_ok "$child: $(fmt_cmd $@)"
   (cd $child && eval $@)
 }
 mg_exec_parent() {
-  echo_ok "$@"
+  echo_ok "$(fmt_cmd $@)"
   (eval $@)
 }
 
