@@ -34,24 +34,30 @@ cwd=`pwd`
 
 # find parent dir
 parent_dir=$cwd
-while [ ! -r $parent_dir/.mg ]; do
+while [ ! -z "${parent_dir}" -a ! -r $parent_dir/.mg ]; do
   parent_dir=${parent_dir%/*}
+done
 
+need_mg_dir() {
   if [ -z $parent_dir ]; then
     echo_fail "Can't find .mg dir!"
     exit 1
   fi
-done
+  mg_dir=$parent_dir/.mg
+}
 
-# set up other paths
-mg_dir=$parent_dir/.mg
-if [ -d $parent_dir/.mg/mg ]; then
-  mg_home=$parent_dir/.mg/mg
+# if we're inside an mg-managed project
+if [ ! -z $parent_dir ]; then
+
+  # if there's a frozen mg present, adjust mg_home to match
+  if [ -d $parent_dir/.mg/mg ]; then
+    mg_home=$parent_dir/.mg/mg
+  fi
+
+  # read config
+  git_config_cmd="git config -f $parent_dir/.mg/config"
+  children=`$git_config_cmd --get-regexp 'repo\..*\.url' | sed 's/repo\.\(.*\)\.url.*/\1/g'`
 fi
-
-# read config
-git_config_cmd="git config -f $parent_dir/.mg/config"
-children=`$git_config_cmd --get-regexp 'repo\..*\.url' | sed 's/repo\.\(.*\)\.url.*/\1/g'`
 
 # if $0 isn't mg, then we've been included from a subcommand
 # as the user has directly run a subcommand script
@@ -70,8 +76,10 @@ if [ "${0##*/}" = "mg" ]; then
   fi
 
   (
-  # always run command from within parent dir
-  cd $parent_dir
+  # always run command from within parent dir if available
+  if [ ! -z $parent_dir ]; then
+    cd $parent_dir
+  fi
   . $mg_home/mg-$cmd
   )
   exit

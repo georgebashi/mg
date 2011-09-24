@@ -1,5 +1,7 @@
 #!/bin/sh
 
+need_mg_dir
+
 ### Run a command for each child repository
 
 for child in $children; do

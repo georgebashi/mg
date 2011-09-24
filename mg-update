@@ -4,6 +4,8 @@ if [ ! -n "${mg_home}" ]; then
   . mg
 fi
 
+need_mg_dir
+
 ### Update child repositories
 
 for child in $children; do

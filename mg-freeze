@@ -1,5 +1,7 @@
 #!/bin/sh
 
+need_mg_dir
+
 ### Clone a copy of mg into .mg, locking the version used for this project
 
 mg_exec_parent $git_config_cmd repo..mg/mg.url https://github.com/georgebashi/mg.git
