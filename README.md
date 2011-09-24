@@ -19,9 +19,7 @@ mg attempts to fix the above without creating too many problems of its own.
 # Install
 In a new directory:
 <pre>
-mkdir .mg
-git clone git@github.com:georgebashi/mg .mg/mg
-cp .mg/mg/mghelper.sh /usr/local/bin/mg
+wget -q -O - https://raw.github.com/georgebashi/mg/master/install-mg.sh | bash
 </pre>
 Now write your `.mg/config`:
 
