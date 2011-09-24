@@ -1,23 +1,15 @@
 #!/bin/sh
 
-if [ -z "${did_run_helper}" ]; then
+if [ -z "${mg_helper_version}" ]; then
   . .mg/mg/mghelper.sh
   exit
 fi
 
-mg_dir=$parent_dir/.mg/mg
+if [ $mg_helper_version -lt 2 ]; then
+  echo_fail "the mg script on your \$PATH is out of date. Try $(fmt_cmd 'mg install')."
+  exit 1
+fi
 
-git_config_cmd="git config -f $parent_dir/.mg/config"
-mg_color_ok=`$git_config_cmd --get-color mg.color.ok green`
-mg_color_fail=`$git_config_cmd --get-color mg.color.fail red`
-mg_color_reset=`$git_config_cmd --get-color '' reset`
-
-echo_ok() {
-  echo " [${mg_color_ok}mg${mg_color_reset}] $@"
-}
-echo_fail() {
-  echo " [${mg_color_fail}mg${mg_color_reset}] $@"
-}
 mg_exec() {
   child=$1
   shift 1
