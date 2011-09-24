@@ -7,6 +7,6 @@ if [ $# -eq 0 ]; then
   for cmd in `find $mg_dir -name 'mg-*.sh'`; do
     cmdname=`basename $cmd .sh | cut -c 4-`
     help=`grep -i '###' $cmd | head -n 1 | cut -c 5-`
-    echo "mg $cmdname: $help"
+    echo_ok "$cmdname: $help"
   done
 fi

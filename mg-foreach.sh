@@ -1,17 +1,16 @@
 
 ### Run a command for each child repository
 
-for dir in $dirs; do
-  if [ ! -e $dir ]; then
-    echo "$msg_prefix_fail $dir: does not exist, run mg update"
-  elif [ ! -d $dir ]; then
-    echo "$msg_prefix_fail $dir: exists and is not a directory, skipping!"
+for child in $children; do
+  if [ ! -e $child ]; then
+    echo_fail $child "does not exist, run mg update"
+  elif [ ! -d $child ]; then
+    echo_fail $child "exists and is not a directory, skipping!"
   else
-    if [ ! -d $dir/.git ]; then
-      echo "$msg_prefix_fail $dir: exists and is not a git repository, skipping!"
+    if [ ! -d $child/.git ]; then
+      echo_fail $child "exists and is not a git repository, skipping!"
     else
-      echo "$msg_prefix_ok $dir: $@"
-      (cd $dir && eval $@)
+      mg_exec $child $@
     fi
   fi
 done
