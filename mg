@@ -58,8 +58,8 @@ if [ ! -z $parent_dir ]; then
   fi
 
   # read config
-  git_config_cmd="git config -f $parent_dir/.mg/config"
-  children=`$git_config_cmd --get-regexp 'repo\..*\.url' | sed 's/repo\.\(.*\)\.url.*/\1/g'`
+  git_config_cmd="git config -f .mg/config"
+  children=$(cd $parent_dir && $git_config_cmd --get-regexp 'repo\..*\.url' | sed 's/repo\.\(.*\)\.url.*/\1/g')
 fi
 
 # if $0 isn't mg, then we've been included from a subcommand
