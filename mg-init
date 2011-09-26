@@ -1,0 +1,18 @@
+#!/bin/sh
+
+[ ! -n "${mg_home}" ] && . mg
+
+### create mg config in current directory
+
+echo_ok "Welcome to $(fmt_cmd mg)!"
+
+[ ! -d $cwd/.mg ] && mg_exec_parent mkdir $cwd/.mg
+
+child_dotgits=( $(find $cwd -mindepth 1 -name .git) )
+children=( ${child_dotgits[@]/#$cwd\//} )
+children=( ${children[@]/%\/\.git/} )
+
+for child in ${children[@]}; do
+  url=$(cd $child && git config remote.origin.url)
+  mg_exec_parent $git_config_cmd "repo.$child.url" "$url"
+done

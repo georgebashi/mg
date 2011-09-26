@@ -23,7 +23,7 @@ if [ -z "$REPO_HOME" ] ; then
   REPO_HOME="https://github.com/georgebashi/mg.git"
 fi
 
-EXEC_FILES="mg mg-foreach mg-freeze mg-help mg-update"
+EXEC_FILES="mg mg-foreach mg-freeze mg-help mg-update mg-init"
 SCRIPT_FILES=""
 
 echo "### mg installer ###"
