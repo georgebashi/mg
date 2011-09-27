@@ -1,5 +1,7 @@
 #!/bin/sh
 
+PAGER=cat
+
 # home defaults to the mg that is being run
 mg_home="$( cd "$( dirname "$0" )" && pwd )"
 

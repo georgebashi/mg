@@ -3,6 +3,10 @@
 [ ! -n "${mg_home}" ] && . mg
 need_mg_dir
 
+git_current_branch() {
+  git branch --no-color | grep '^\* ' | grep -v 'no branch' | sed 's/^* //g'
+}
+
 ### Update child repositories
 
 for child in $children; do
@@ -11,17 +15,40 @@ for child in $children; do
     url=`$git_config_cmd --get repo.$child.url`
     mg_exec_parent git clone $url $child
 
-  # if child isn't a directory
+    # if child isn't a directory
   elif [ ! -d $child ]; then
     echo_fail "$child: exists and is not a directory, skipping!"
 
-  # child must exist as directory
+    # child must exist as directory
   else
     # if there's no .git dir
     if [ ! -d $child/.git ]; then
       echo_fail "$child: exists and isn't a git repository, skipping!"
     else
       mg_exec $child git fetch
+      cd $child
+
+      branch=`git_current_branch`
+      remote=`git config branch.$branch.remote`
+      remote_ref=`git config branch.$branch.merge`
+      remote_branch=$remote/${remote_ref#refs/heads/}
+
+      merge_base=`git merge-base $branch $remote_branch`
+
+      local_dirty=( $(git status --porcelain -uall | awk '{ print $2 }' | sort) )
+      local_diff=( $(git diff --name-only $merge_base $branch | sort) )
+      remote_diff=( $(git diff --name-only $merge_base $remote_branch | sort) )
+
+      conflicts=( $(printf "%s\\n" "${local_dirty[@]}" "${local_diff[@]}" "${remote_diff[@]}"  | sort | uniq -d) )
+
+      cd $parent_dir
+
+      if [ ! -z $conflicts ]; then
+        echo_fail "Not auto-merging; the following files may cause conflicts: $conflicts"
+        echo_fail "Please merge manually: $(fmt_cmd cd $child), $(fmt_cmd git commit) any recent changes, then $(fmt_cmd git merge $remote_branch)"
+      else
+        mg_exec $child git merge $remote_branch
+      fi
     fi
   fi
 done
