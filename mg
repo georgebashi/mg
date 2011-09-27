@@ -4,6 +4,7 @@ PAGER=cat
 
 # home defaults to the mg that is being run
 mg_home="$( cd "$( dirname "$0" )" && pwd )"
+git_config_cmd="git config -f .mg/config"
 
 # set up colours {{{
 mg_color_ok=`git config --get-color '' green`
@@ -60,7 +61,6 @@ if [ ! -z $parent_dir ]; then
   fi
 
   # read config
-  git_config_cmd="git config -f .mg/config"
   children=$(cd $parent_dir && $git_config_cmd --get-regexp 'repo\..*\.url' | sed 's/repo\.\(.*\)\.url.*/\1/g')
 fi
 

@@ -17,7 +17,7 @@ Not a lot -- some people like them, and they work well in certain situations. Th
 mg attempts to fix the above without creating too many problems of its own.
 
 # Install
-In a new directory:
+Run this:
 <pre>
 wget -q -O - https://raw.github.com/georgebashi/mg/master/install-mg.sh | bash
 </pre>
